@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sonomama-kaku overlay</title>
+  <link rel="stylesheet" href="overlay.css">
+</head>
+<body>
+  <canvas id="screenshot-canvas"></canvas>
+  <canvas id="drawing-canvas"></canvas>
+
+  <div id="toolbar">
+    <input type="color" id="color-picker" value="#ff0000" title="色を選択">
+    <input type="range" id="brush-size" min="1" max="30" value="4" title="ブラシサイズ">
+    <span id="brush-size-label">4px</span>
+    <button id="eraser-btn" title="消しゴム">消しゴム</button>
+    <button id="save-btn" title="保存">保存</button>
+    <button id="close-btn" title="閉じる (Esc)">閉じる</button>
+  </div>
+
+  <script src="overlay.js"></script>
+</body>
+</html>
