@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc && esbuild src/renderer/overlay.ts --bundle --outfile=dist/renderer/overlay.js --platform=browser && node -e \"const fs=require('fs'),p=require('path');['overlay.html','overlay.css'].forEach(f=>fs.copyFileSync(p.join('src','renderer',f),p.join('dist','renderer',f)))\"",
     "start": "npm run build && electron .",
-    "dist:win": "npm run build && electron-builder --win",
-    "dist:mac": "npm run build && electron-builder --mac"
+    "dist:win": "npm run build && electron-builder --win --publish never",
+    "dist:mac": "npm run build && electron-builder --mac --publish never"
   },
   "devDependencies": {
     "electron": "^33.0.0",
@@ -35,19 +35,9 @@
       ]
     },
     "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": ["x64", "arm64"]
-        }
-      ],
+      "target": "dmg",
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "Andyyyy64",
-      "repo": "sonomama-kaku"
     }
   }
 }

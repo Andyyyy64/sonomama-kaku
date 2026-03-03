@@ -21,7 +21,22 @@ jobs:
           name: windows-artifacts
           path: release/*.exe
 
-  build-macos:
+  build-macos-x64:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx electron-builder --mac --x64 --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-x64-artifacts
+          path: release/*.dmg
+
+  build-macos-arm64:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,26 +45,22 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run dist:mac
+      - run: npx electron-builder --mac --arm64 --publish never
       - uses: actions/upload-artifact@v4
         with:
-          name: macos-artifacts
+          name: macos-arm64-artifacts
           path: release/*.dmg
 
   publish-release:
-    needs: [build-windows, build-macos]
+    needs: [build-windows, build-macos-x64, build-macos-arm64]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: windows-artifacts
           path: artifacts/
-      - uses: actions/download-artifact@v4
-        with:
-          name: macos-artifacts
-          path: artifacts/
+          merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
           files: artifacts/*
