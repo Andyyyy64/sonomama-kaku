@@ -1,15 +1,53 @@
 {
   "name": "sonomama-kaku",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "デスクトップ上に直接描画できるスクリーンオーバーレイツール",
   "main": "dist/main/main.js",
   "scripts": {
     "build": "tsc && esbuild src/renderer/overlay.ts --bundle --outfile=dist/renderer/overlay.js --platform=browser && node -e \"const fs=require('fs'),p=require('path');['overlay.html','overlay.css'].forEach(f=>fs.copyFileSync(p.join('src','renderer',f),p.join('dist','renderer',f)))\"",
-    "start": "npm run build && electron ."
+    "start": "npm run build && electron .",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac"
   },
   "devDependencies": {
     "electron": "^33.0.0",
+    "electron-builder": "^25.1.8",
     "esbuild": "^0.24.0",
     "typescript": "^5.6.0"
+  },
+  "build": {
+    "appId": "com.andyyyy64.sonomama-kaku",
+    "productName": "sonomama-kaku",
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release/"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Andyyyy64",
+      "repo": "sonomama-kaku"
+    }
   }
 }
