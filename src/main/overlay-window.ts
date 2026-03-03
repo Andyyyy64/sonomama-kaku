@@ -24,7 +24,6 @@ export function createOverlayWindow(screenshotDataUrl: string): BrowserWindow {
     frame: false,
     transparent: true,
     alwaysOnTop: true,
-    fullscreen: true,
     skipTaskbar: true,
     resizable: false,
     hasShadow: false,
@@ -34,6 +33,11 @@ export function createOverlayWindow(screenshotDataUrl: string): BrowserWindow {
       nodeIntegration: false,
     },
   });
+
+  overlayWindow.setAlwaysOnTop(true, 'screen-saver');
+  if (process.platform !== 'win32') {
+    overlayWindow.setFullScreen(true);
+  }
 
   overlayWindow.loadFile(
     path.join(__dirname, '..', 'renderer', 'overlay.html')

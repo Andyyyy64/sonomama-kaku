@@ -11,7 +11,7 @@ async function activateOverlay(): Promise<void> {
     const screenshot = await captureScreen();
     createOverlayWindow(screenshot);
   } catch (err) {
-    console.error('Failed to capture screen:', err);
+    dialog.showErrorBox('sonomama-kaku', `スクリーンキャプチャに失敗しました:\n${err}`);
   }
 }
 
