@@ -1,0 +1,15 @@
+{
+  "name": "sonomama-kaku",
+  "version": "1.0.0",
+  "description": "デスクトップ上に直接描画できるスクリーンオーバーレイツール",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "build": "tsc && esbuild src/renderer/overlay.ts --bundle --outfile=dist/renderer/overlay.js --platform=browser && node -e \"const fs=require('fs'),p=require('path');['overlay.html','overlay.css'].forEach(f=>fs.copyFileSync(p.join('src','renderer',f),p.join('dist','renderer',f)))\"",
+    "start": "npm run build && electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}
