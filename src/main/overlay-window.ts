@@ -35,7 +35,9 @@ export function createOverlayWindow(screenshotDataUrl: string): BrowserWindow {
   });
 
   overlayWindow.setAlwaysOnTop(true, 'screen-saver');
-  if (process.platform !== 'win32') {
+  if (process.platform === 'win32') {
+    overlayWindow.setSimpleFullScreen(true);
+  } else {
     overlayWindow.setFullScreen(true);
   }
 
